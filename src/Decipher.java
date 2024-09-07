@@ -1,0 +1,2 @@
+public class Decipher {
+}
