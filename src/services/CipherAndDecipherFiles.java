@@ -1,9 +1,10 @@
+package services;
+
 import java.io.*;
-import java.nio.file.Files;
 
-public class ReadAndWriteFiles {
+public class CipherAndDecipherFiles {
 
-    public String readFile(String filename) {
+    public String encipherFile(String filename) {
         String line = "";
         try (FileReader fileReader = new FileReader(filename);
         BufferedReader bufferedReader = new BufferedReader(fileReader)) {
