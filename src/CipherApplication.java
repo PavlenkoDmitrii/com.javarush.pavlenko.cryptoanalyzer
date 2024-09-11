@@ -1,5 +1,7 @@
 import exception.ValidatorException;
+import services.CipherAndDecipherFiles;
 import services.Validator;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,7 +26,7 @@ public class CipherApplication {
             int key = 0;
             try {
                 key = scanner.nextInt();
-                Validator.isKeyValid(key);
+                Validator.isKeyValid(key, Alphabet.getALPHABET());
             } catch (InputMismatchException | ValidatorException ex) {
                 System.out.println("Ошибочный ввод");
                 scanner.nextLine();
@@ -41,7 +43,9 @@ public class CipherApplication {
                 Thread.sleep(1000);
                 continue;
             }
-            //метод шифровки
+            CipherAndDecipherFiles cadf = new CipherAndDecipherFiles(Alphabet.getALPHABET());
+            cadf.encipherFile(path, key, pathAfterCiphered);
+
             break;
         }
         System.out.println("Шифрование завершено");
@@ -64,7 +68,7 @@ public class CipherApplication {
             int key = 0;
             try {
                 key = scanner.nextInt();
-                Validator.isKeyValid(key);
+                Validator.isKeyValid(key, Alphabet.getALPHABET());
             } catch (InputMismatchException | ValidatorException ex) {
                 System.out.println("Ошибочный ввод");
                 scanner.nextLine();
@@ -81,7 +85,8 @@ public class CipherApplication {
                 Thread.sleep(1000);
                 continue;
             }
-            //метод дешифровки
+            CipherAndDecipherFiles cadf = new CipherAndDecipherFiles(Alphabet.getALPHABET());
+            cadf.decipherFile(path, key, pathAfterCiphered);
             break;
         }
         System.out.println("Дешифровка завершена");
