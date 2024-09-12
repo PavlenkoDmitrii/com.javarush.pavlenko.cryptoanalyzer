@@ -14,10 +14,19 @@ public class Decipher {
                 if (j == 0) {
                     j = list.size();
                 }
-                int shift = (Math.abs((j - key) % list.size()));
-                res = String.valueOf(stringBuilder.append(list.get(shift)));
+                int shift = (Math.abs(j - key) % list.size());
+                if (j - key < 0) {
+                    if (shift == 0) {
+                        res = String.valueOf(stringBuilder.append(list.get(shift)));
+                    } else {
+                        res = String.valueOf(stringBuilder.append(list.get(list.size() - shift)));
+                    }
+                } else {
+                    res = String.valueOf(stringBuilder.append(list.get(shift)));
+                }
             }
         }
+
         return res;
     }
 }

@@ -11,7 +11,7 @@ public class Cipher {
         for (char aChar : chars) {
             if (list.contains(aChar)) {
                 int j = list.indexOf(aChar);
-                int shift = (Math.abs((j + key) % list.size()));
+                int shift = ((j + key) % list.size());
                 res = String.valueOf(stringBuilder.append(list.get(shift)));
             }
         }
