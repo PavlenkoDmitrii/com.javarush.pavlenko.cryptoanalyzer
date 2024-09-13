@@ -2,12 +2,16 @@ import exception.ValidatorException;
 import services.CipherAndDecipherFiles;
 import services.Validator;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CipherApplication {
 
     private static String command = null;
+    //private static final String RETURN_TO_MAIN_MENU = "Для возвращения в главное меню введите \"Меню\"";
 
     private static void coder() throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
@@ -23,12 +27,12 @@ public class CipherApplication {
                 continue;
             }
             System.out.print("Введите целое число (ключ): ");
-            int key = 0;
+            int key;
             try {
                 key = scanner.nextInt();
                 Validator.isKeyValid(key, Alphabet.getALPHABET());
             } catch (InputMismatchException | ValidatorException ex) {
-                System.out.println("Ошибочный ввод");
+                System.out.println("Некорректный ключ");
                 scanner.nextLine();
                 Thread.sleep(1000);
                 continue;
@@ -37,11 +41,25 @@ public class CipherApplication {
             System.out.println("Введите путь к файлу с расширением \".txt\" для сохранения результата шифрования:");
             String pathAfterCiphered = scanner.nextLine();
             try {
-                Validator.isOutputFileGood(pathAfterCiphered);
+                Validator.isOutputPathGood(pathAfterCiphered);
             } catch (ValidatorException ve) {
                 System.out.println("Некорректный путь или расширение файла!");
                 Thread.sleep(1000);
                 continue;
+            }
+            try {
+                Validator.isOutputFileExist(pathAfterCiphered);
+            } catch (ValidatorException ve) {
+                Path absolutePath = Path.of(pathAfterCiphered);
+                Path parent = absolutePath.getParent();
+                try {
+                    Files.createDirectories(parent);
+                    Files.createFile(absolutePath);
+                } catch (IOException e) {
+                    System.out.println("Ошибка при создании нового файла!");
+                    Thread.sleep(1000);
+                    continue;
+                }
             }
             CipherAndDecipherFiles cadf = new CipherAndDecipherFiles(Alphabet.getALPHABET());
             cadf.encipherFile(path, key, pathAfterCiphered);
@@ -64,29 +82,43 @@ public class CipherApplication {
                 Thread.sleep(1000);
                 continue;
             }
-            System.out.print("Введите целое число (ключ): ");
-            int key = 0;
+            System.out.print("Введите целое положительное число (ключ): ");
+            int key;
             try {
                 key = scanner.nextInt();
                 Validator.isKeyValid(key, Alphabet.getALPHABET());
             } catch (InputMismatchException | ValidatorException ex) {
-                System.out.println("Ошибочный ввод");
+                System.out.println("Некорректный ключ");
                 scanner.nextLine();
                 Thread.sleep(1000);
                 continue;
             }
             scanner.nextLine();
             System.out.println("Введите путь к файлу с расширением \".txt\" для сохранения результата дешифрования:");
-            String pathAfterCiphered = scanner.nextLine();
+            String pathAfterDeciphered = scanner.nextLine();
             try {
-                Validator.isOutputFileGood(pathAfterCiphered);
+                Validator.isOutputPathGood(pathAfterDeciphered);
             } catch (ValidatorException ve) {
                 System.out.println("Некорректный путь или расширение файла!");
                 Thread.sleep(1000);
                 continue;
             }
+            try {
+                Validator.isOutputFileExist(pathAfterDeciphered);
+            } catch (ValidatorException ve) {
+                Path absolutePath = Path.of(pathAfterDeciphered);
+                Path parent = absolutePath.getParent();
+                try {
+                    Files.createDirectories(parent);
+                    Files.createFile(absolutePath);
+                } catch (IOException e) {
+                    System.out.println("Ошибка при создании нового файла!");
+                    Thread.sleep(1000);
+                    continue;
+                }
+            }
             CipherAndDecipherFiles cadf = new CipherAndDecipherFiles(Alphabet.getALPHABET());
-            cadf.decipherFile(path, key, pathAfterCiphered);
+            cadf.decipherFile(path, key, pathAfterDeciphered);
             break;
         }
         System.out.println("Дешифровка завершена");

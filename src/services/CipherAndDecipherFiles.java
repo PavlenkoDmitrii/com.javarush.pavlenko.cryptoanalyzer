@@ -22,7 +22,7 @@ public class CipherAndDecipherFiles {
                 fileWriter.flush();
             }
         } catch (IOException ex) {
-            throw new RuntimeException();
+            ex.printStackTrace();
         }
     }
 
@@ -38,7 +38,7 @@ public class CipherAndDecipherFiles {
                 fileWriter.flush();
             }
         } catch (IOException ex) {
-            throw new RuntimeException();
+            ex.printStackTrace();
         }
     }
 }
