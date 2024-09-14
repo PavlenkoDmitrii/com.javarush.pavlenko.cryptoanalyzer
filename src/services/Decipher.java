@@ -10,12 +10,12 @@ public class Decipher {
         String res = "";
         for (char aChar : chars) {
             if (list.contains(aChar)) {
-                int j = list.indexOf(aChar);
-                if (j == 0) {
-                    j = list.size();
+                int indexOfSymbol = list.indexOf(aChar);
+                if (indexOfSymbol == 0) {
+                    indexOfSymbol = list.size();
                 }
-                int shift = (Math.abs(j - key) % list.size());
-                if (j - key < 0) {
+                int shift = (Math.abs(indexOfSymbol - key) % list.size());
+                if (indexOfSymbol - key < 0) {
                     if (shift == 0) {
                         res = String.valueOf(stringBuilder.append(list.get(shift)));
                     } else {

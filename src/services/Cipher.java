@@ -10,8 +10,8 @@ public class Cipher {
         String res = "";
         for (char aChar : chars) {
             if (list.contains(aChar)) {
-                int j = list.indexOf(aChar);
-                int shift = ((j + key) % list.size());
+                int indexOfSymbol = list.indexOf(aChar);
+                int shift = ((indexOfSymbol + key) % list.size());
                 res = String.valueOf(stringBuilder.append(list.get(shift)));
             }
         }

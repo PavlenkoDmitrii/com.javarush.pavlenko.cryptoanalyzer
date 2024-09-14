@@ -19,10 +19,10 @@ public class Validator {
     public static void isInputFileGood(String filePath) {
         Path path = Path.of(filePath);
 
-        boolean exists = Files.exists(path);
-        boolean absolute = path.isAbsolute();
-        boolean validFilenameExtension = path.toString().endsWith(".txt");
-        if (!exists || !absolute || !validFilenameExtension) {
+        boolean isExists = Files.exists(path);
+        boolean isAbsolute = path.isAbsolute();
+        boolean isValidFilenameExtension = path.toString().endsWith(".txt");
+        if (!isExists || !isAbsolute || !isValidFilenameExtension) {
             throw new ValidatorException("Input file or path error");
         }
     }
@@ -30,19 +30,29 @@ public class Validator {
     public static void isOutputPathGood(String filePath) {
         Path path = Path.of(filePath);
 
-        boolean absolute = path.isAbsolute();
-        boolean validFilenameExtension = path.toString().endsWith(".txt");
-        if (!absolute || !validFilenameExtension) {
+        boolean isAbsolute = path.isAbsolute();
+        boolean isValidFilenameExtension = path.toString().endsWith(".txt");
+        if (!isAbsolute || !isValidFilenameExtension) {
             throw new ValidatorException("Output path error");
         }
     }
 
-    public static void isOutputFileExist(String filePath) {
+    public static void isOutputDirectoryGood(String filePath) {
         Path path = Path.of(filePath);
 
-        boolean isExist = Files.exists(path);
-        if (!isExist) {
-            throw new ValidatorException("Output file error");
+        boolean isAbsolute = path.isAbsolute();
+        if (!isAbsolute) {
+            throw new ValidatorException("Output path error");
         }
+    }
+
+    public static boolean isOutputDirectoryExist(String filePath) {
+        Path path = Path.of(filePath);
+        return Files.exists(path);
+        }
+
+    public static boolean isOutputFileExist(String filePath) {
+        Path path = Path.of(filePath);
+        return Files.exists(path);
     }
 }
