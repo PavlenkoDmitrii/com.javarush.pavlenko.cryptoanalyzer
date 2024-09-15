@@ -14,7 +14,7 @@ public class CipherAndDecipherFiles {
         this.alphabet = alphabet;
     }
 
-    public void encryptFile(String pathToOriginalFile, int key, String pathToEncryptedFile) {
+    public void encryptFile(String pathToOriginalFile, int key, String pathToEncryptedFile) throws IOException {
         try (FileReader fileReader = new FileReader(pathToOriginalFile);
              BufferedReader bufferedReader = new BufferedReader(fileReader);
              FileWriter fileWriter = new FileWriter(pathToEncryptedFile)) {
@@ -25,12 +25,10 @@ public class CipherAndDecipherFiles {
                 fileWriter.write('\n');
                 fileWriter.flush();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 
-    public void decryptFile(String pathToEncryptedFile, int key, String pathToDecryptedFile) {
+    public void decryptFile(String pathToEncryptedFile, int key, String pathToDecryptedFile) throws IOException {
         try (FileReader fileReader = new FileReader(pathToEncryptedFile);
              BufferedReader bufferedReader = new BufferedReader(fileReader);
              FileWriter fileWriter = new FileWriter(pathToDecryptedFile)) {
@@ -41,12 +39,10 @@ public class CipherAndDecipherFiles {
                 fileWriter.write('\n');
                 fileWriter.flush();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 
-    public void decryptWithBruteForceFile(String pathToEncryptedFile, String pathForSaveDecryptedFiles) {
+    public void decryptWithBruteForceFile(String pathToEncryptedFile, String pathForSaveDecryptedFiles) throws IOException {
         try (FileReader fileReader = new FileReader(pathToEncryptedFile);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
             for (int i = 1; i < alphabet.size() - 1; i++) {
@@ -60,8 +56,6 @@ public class CipherAndDecipherFiles {
                 }
                 bufferedReader.reset();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
     }
 }
